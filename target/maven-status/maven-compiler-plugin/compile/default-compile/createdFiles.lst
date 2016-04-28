@@ -1,0 +1,4 @@
+com\infinitechnic\config\AppConfig.class
+com\infinitechnic\Launcher.class
+com\infinitechnic\Launcher$1.class
+com\infinitechnic\rest\TestService.class
