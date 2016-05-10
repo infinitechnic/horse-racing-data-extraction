@@ -1,9 +1,12 @@
 package com.infinitechnic.horseracing.data.hkjc;
 
+import com.mongodb.MongoClient;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.mongodb.morphia.Datastore;
+import org.mongodb.morphia.Morphia;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -83,6 +86,8 @@ public class ExtractHkjcDataTest {
         System.out.println("runningPositions: " + runningPositions);
         System.out.println("finishTime: " + finishTime);
         System.out.println("winOdds: " + winOdds);
+
+        saveHorse(horse);
     }
 
     public Horse extractHorseProfile(Element element) {
@@ -161,6 +166,16 @@ public class ExtractHkjcDataTest {
 
     private List<Integer> extractRunningPositions(Element element) {
         return element.select("tr td").stream().map(td -> Integer.parseInt(td.html())).collect(Collectors.toList());
+    }
+
+    private void saveHorse(Horse horse) {
+        MongoClient mongoClient = new MongoClient("10.0.10.214", 27017);
+        Morphia morphia = new Morphia();
+        morphia.mapPackage("com.infinitechnic.horseracing.data.hkjc");
+        Datastore datastore = morphia.createDatastore(mongoClient, "horseracing");
+        datastore.ensureIndexes();
+
+        datastore.save(horse);
     }
 
     //Useless, add to util later
