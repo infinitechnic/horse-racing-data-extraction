@@ -1,5 +1,8 @@
 package com.infinitechnic.horseracing.data.hkjc;
 
+import com.infinitechnic.horseracing.data.hkjc.entity.Horse;
+import com.infinitechnic.horseracing.data.hkjc.entity.Jockey;
+import com.infinitechnic.horseracing.data.hkjc.entity.Trainer;
 import com.mongodb.MongoClient;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -169,7 +172,7 @@ public class ExtractHkjcDataTest {
     }
 
     private void saveHorse(Horse horse) {
-        MongoClient mongoClient = new MongoClient("10.0.10.214", 27017);
+        MongoClient mongoClient = new MongoClient("localhost", 27017);
         Morphia morphia = new Morphia();
         morphia.mapPackage("com.infinitechnic.horseracing.data.hkjc");
         Datastore datastore = morphia.createDatastore(mongoClient, "horseracing");

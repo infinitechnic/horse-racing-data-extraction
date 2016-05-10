@@ -1,11 +1,11 @@
-package com.infinitechnic.horseracing.data.hkjc;
+package com.infinitechnic.horseracing.data.hkjc.entity;
 
-public class Jockey {
+public class Trainer {
     private String id;
     //TODO: handle multilingual
     private String name;
 
-    public Jockey() {
+    public Trainer() {
         super();
         id = null;
         name = null;

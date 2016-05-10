@@ -1,4 +1,4 @@
-package com.infinitechnic.horseracing.data.hkjc;
+package com.infinitechnic.horseracing.data.hkjc.entity;
 
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;

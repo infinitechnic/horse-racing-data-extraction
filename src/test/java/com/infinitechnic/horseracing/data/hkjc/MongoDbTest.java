@@ -1,19 +1,16 @@
 package com.infinitechnic.horseracing.data.hkjc;
 
+import com.infinitechnic.horseracing.data.hkjc.entity.Horse;
 import com.mongodb.MongoClient;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
 import org.mongodb.morphia.query.Query;
 import org.testng.annotations.Test;
 
-import javax.swing.plaf.synth.SynthTextAreaUI;
-
 public class MongoDbTest {
     @Test
     public void queryMongoDb() {
-        MongoClient mongoClient = new MongoClient("10.0.10.214", 27017);
+        MongoClient mongoClient = new MongoClient("localhost", 27017);
         Morphia morphia = new Morphia();
         morphia.mapPackage("com.infinitechnic.horseracing.data.hkjc");
         Datastore datastore = morphia.createDatastore(mongoClient, "horseracing");
