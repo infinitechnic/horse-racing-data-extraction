@@ -1,16 +1,11 @@
-package com.infinitechnic.horseracing.data.hkjc.entity;
+package com.infinitechnic.horseracing.data.hkjc.entity.trainer;
 
-import org.mongodb.morphia.annotations.Entity;
-import org.mongodb.morphia.annotations.Id;
-
-@Entity(value = "horse")
-public class Horse {
-    @Id
+public class Trainer {
     private String id;
     //TODO: handle multilingual
     private String name;
 
-    public Horse() {
+    public Trainer() {
         super();
         id = null;
         name = null;

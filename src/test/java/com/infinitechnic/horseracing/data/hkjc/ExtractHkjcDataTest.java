@@ -1,26 +1,12 @@
 package com.infinitechnic.horseracing.data.hkjc;
 
-import com.infinitechnic.horseracing.data.hkjc.entity.Horse;
-import com.infinitechnic.horseracing.data.hkjc.entity.Jockey;
-import com.infinitechnic.horseracing.data.hkjc.entity.Trainer;
-import com.mongodb.MongoClient;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-import org.mongodb.morphia.Datastore;
-import org.mongodb.morphia.Morphia;
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import com.infinitechnic.horseracing.data.BaseTest;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.function.Function;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
+public class ExtractHkjcDataTest extends BaseTest {
+/*
+    @Autowired
+    private HorseDao horseDao;
 
-public class ExtractHkjcDataTest {
     @Test
     public void getHistoricalData() {
         try {
@@ -90,7 +76,7 @@ public class ExtractHkjcDataTest {
         System.out.println("finishTime: " + finishTime);
         System.out.println("winOdds: " + winOdds);
 
-        saveHorse(horse);
+        horseDao.saveHorse(horse);
     }
 
     public Horse extractHorseProfile(Element element) {
@@ -171,18 +157,9 @@ public class ExtractHkjcDataTest {
         return element.select("tr td").stream().map(td -> Integer.parseInt(td.html())).collect(Collectors.toList());
     }
 
-    private void saveHorse(Horse horse) {
-        MongoClient mongoClient = new MongoClient("localhost", 27017);
-        Morphia morphia = new Morphia();
-        morphia.mapPackage("com.infinitechnic.horseracing.data.hkjc");
-        Datastore datastore = morphia.createDatastore(mongoClient, "horseracing");
-        datastore.ensureIndexes();
-
-        datastore.save(horse);
-    }
-
     //Useless, add to util later
     public static <T, U> List<U> convertList(List<T> from, Function<T, U> func){
         return from.stream().map(func).collect(Collectors.toList());
     }
+*/
 }

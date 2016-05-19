@@ -1,11 +1,12 @@
 package com.infinitechnic.horseracing.data.hkjc.dao;
 
-import com.infinitechnic.horseracing.data.hkjc.entity.Horse;
+import com.infinitechnic.horseracing.data.hkjc.entity.horse.Horse;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
-import org.mongodb.morphia.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class HorseDaoImpl implements HorseDao {
     @Autowired
     private Datastore datastore;
@@ -13,5 +14,11 @@ public class HorseDaoImpl implements HorseDao {
     @Override
     public Horse getHorseById(String id) {
         return datastore.find(Horse.class).field("id").equal(new ObjectId(id)).get();
+    }
+
+    @Override
+    public Horse saveHorse(Horse horse) {
+        datastore.save(horse);
+        return horse;
     }
 }
