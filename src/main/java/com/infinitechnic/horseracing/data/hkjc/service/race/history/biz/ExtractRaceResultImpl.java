@@ -1,9 +1,9 @@
-package com.infinitechnic.horseracing.data.hkjc.service.race.biz;
+package com.infinitechnic.horseracing.data.hkjc.service.race.history.biz;
 
 import com.infinitechnic.horseracing.data.hkjc.entity.horse.Horse;
 import com.infinitechnic.horseracing.data.hkjc.entity.jockey.Jockey;
-import com.infinitechnic.horseracing.data.hkjc.entity.race.history.Race;
-import com.infinitechnic.horseracing.data.hkjc.entity.race.history.Result;
+import com.infinitechnic.horseracing.data.hkjc.entity.race.history.RaceResult;
+import com.infinitechnic.horseracing.data.hkjc.entity.race.history.ResultRecord;
 import com.infinitechnic.horseracing.data.hkjc.entity.trainer.Trainer;
 import com.infinitechnic.horseracing.data.hkjc.exception.ServiceFailureException;
 import com.infinitechnic.horseracing.data.hkjc.exception.ServiceRenderException;
@@ -24,35 +24,35 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Service
-public class ExtractRaceHistoryImpl implements ExtractRaceHistory {
+public class ExtractRaceResultImpl implements ExtractRaceResult {
     @Override
-    public Race render(Date raceDate, String venue, Integer raceNumber) throws ServiceRenderException, ServiceFailureException {
-        Race race = null;
+    public RaceResult render(Date raceDate, String venue, Integer raceNumber) throws ServiceRenderException, ServiceFailureException {
+        RaceResult raceResult = null;
         try {
             Document doc = Jsoup.connect(StringUtil.concat("http://racing.hkjc.com/racing/Info/Meeting/Results/English/Local/", DateUtil.format(raceDate, "yyyyMMdd"), "/", venue, "/", StringUtil.toString(raceNumber))).get();
             Elements elements = doc.select("div.clearDivFloat.rowDiv15 table.draggable");
             Assert.isTrue(elements.size() == 1);
             if (elements.size() == 1) {
-                parseHtml(race = new Race(raceDate, raceNumber), elements.get(0));
+                parseHtml(raceResult = new RaceResult(raceDate, raceNumber), elements.get(0));
             }
         } catch (IOException ioe) {
             throw new ServiceFailureException(ioe);
         }
-        return race;
+        return raceResult;
     }
 
-    private void parseHtml(Race race, Element element) {
+    private void parseHtml(RaceResult raceResult, Element element) {
         element.select("tbody tr.trBgGrey,tr.trBgWhite").forEach(tr -> {
-            Result result = toResult(tr);
-            if (result != null) {
-                race.getResults().add(result);
+            ResultRecord resultRecord = toResultRecord(tr);
+            if (resultRecord != null) {
+                raceResult.getResultRecords().add(resultRecord);
             }
         });
     }
 
-    private Result toResult(Element element) {
+    private ResultRecord toResultRecord(Element element) {
         Elements elements = element.select("td[nowrap]");
-        Result result = null;
+        ResultRecord resultRecord = null;
         if (elements.size() == 12) {
             String place = elements.get(0).html();
             String horseNo = elements.get(1).html();
@@ -79,21 +79,21 @@ public class ExtractRaceHistoryImpl implements ExtractRaceHistory {
             String finishTime = elements.get(10).html();
             String winOdds = elements.get(11).html();
 
-            result = new Result();
-            result.setPlace(place);
-            result.setHorseNo(horseNo);
-            result.setHorse(horse);
-            result.setJockey(jockey);
-            result.setTrainer(trainer);
-            result.setActualWeight(actualWeight);
-            result.setHorseWeight(horseWeight);
-            result.setDraw(draw);
-            result.setLbw(lbw);
-            result.getRunningPositions().addAll(runningPositions);
-            result.setFinishTime(finishTime);
-            result.setWinOdds(winOdds);
+            resultRecord = new ResultRecord();
+            resultRecord.setPlace(place);
+            resultRecord.setHorseNo(horseNo);
+            resultRecord.setHorse(horse);
+            resultRecord.setJockey(jockey);
+            resultRecord.setTrainer(trainer);
+            resultRecord.setActualWeight(actualWeight);
+            resultRecord.setHorseWeight(horseWeight);
+            resultRecord.setDraw(draw);
+            resultRecord.setLbw(lbw);
+            resultRecord.getRunningPositions().addAll(runningPositions);
+            resultRecord.setFinishTime(finishTime);
+            resultRecord.setWinOdds(winOdds);
         }
-        return result;
+        return resultRecord;
 /*
         System.out.println("---------------------------------");
         System.out.println("place: " + place);

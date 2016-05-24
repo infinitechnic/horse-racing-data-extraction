@@ -4,7 +4,6 @@ import com.infinitechnic.horseracing.data.hkjc.entity.race.fixture.RaceDay;
 import com.infinitechnic.horseracing.data.hkjc.entity.race.fixture.RaceInfo;
 import com.infinitechnic.horseracing.data.hkjc.exception.ServiceFailureException;
 import com.infinitechnic.horseracing.data.hkjc.exception.ServiceRenderException;
-import com.infinitechnic.util.DateUtil;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -17,6 +16,7 @@ import org.springframework.util.Assert;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -31,8 +31,11 @@ public class RetrieveRaceCalendarImpl implements RetrieveRaceCalendar {
     private static final String REGEXP_IMAGE_CLASS = "^<img src=\"images/class_(.+).gif\".+>$";
     private static final Pattern PATTERN_IMAGE_CLASS = Pattern.compile(REGEXP_IMAGE_CLASS);
 
-    private static final String REGEXP_DISTANCE = "^([0-9]+)\\(([0-9]+)\\)(.*)$";
-    private static final Pattern PATTERN_DISTANCE = Pattern.compile(REGEXP_DISTANCE);
+    private static final String REGEXP_RACE_INFO = "^([0-9]+)\\(([0-9]+)\\)(.*)$";
+    private static final Pattern PATTERN_RACE_INFO = Pattern.compile(REGEXP_RACE_INFO);
+
+    private static final String VALUE_AWT = "AWT";
+    private static final String VALUE_TURF = "TURF";
 
     @Override
     public List<RaceDay> render(Integer year, Integer month) throws ServiceRenderException, ServiceFailureException {
@@ -77,44 +80,53 @@ public class RetrieveRaceCalendarImpl implements RetrieveRaceCalendar {
         lineMatcher = PATTERN_IMAGE.matcher(info.get(1).toString());
         Assert.isTrue(lineMatcher.matches());
         raceDay.setDayNight(lineMatcher.group(1).toUpperCase());
-        // Course
+        // Track
         lineMatcher = PATTERN_IMAGE.matcher(info.get(2).toString());
         Assert.isTrue(lineMatcher.matches());
-        raceDay.setCourse(lineMatcher.group(1).toUpperCase());
+        raceDay.setTrack(lineMatcher.group(1).toUpperCase());
 
         Elements raceInfoElements = element.select("table tbody tr");
         int totalRow = raceInfoElements.size();
         Assert.isTrue(totalRow > 0);
         for (int i=1; i<totalRow; i++) {
-            toRaceInfo(raceInfoElements.get(i));
+            toRaceInfo(raceDay.getDate(), i, raceInfoElements.get(i));
         }
         return raceDay;
     }
 
-    private RaceInfo toRaceInfo(Element raceInfoElement) {
-        RaceInfo raceInfo = new RaceInfo();
+    private RaceInfo toRaceInfo(Date date, Integer raceNo, Element raceInfoElement) {
+        RaceInfo raceInfo = new RaceInfo(date, raceNo);
 
-        // Class
+        // Race Class
         Elements classElements = raceInfoElement.select("td[valign=top] img");
         int noOfImage = classElements.size();
         Assert.isTrue(noOfImage <= 2);
         Matcher classMatcher = PATTERN_IMAGE_CLASS.matcher(classElements.get(0).toString());
         Assert.isTrue(classMatcher.matches());
-        raceInfo.setGroup(classMatcher.group(1).toUpperCase());
+        raceInfo.setRaceClass(classMatcher.group(1).toUpperCase());
 
         // All Weather Track
         if (noOfImage > 1) {
-            //TODO: All Weather Track
+            // All Weather Track
+            raceInfo.setTrack(VALUE_AWT);
+        } else {
+            raceInfo.setTrack(VALUE_TURF);
         }
 
-        // Distance
-        Elements distanceElements = raceInfoElement.select("td[width=80%] span[class=boldtext] font");
-        Assert.isTrue(distanceElements.size() == 1);
-        Matcher distanceMatcher = PATTERN_DISTANCE.matcher(distanceElements.get(0).html());
+        // Distance (Section) - Type
+        Elements raceInfoElements = raceInfoElement.select("td[width=80%] span[class=boldtext] font");
+        Assert.isTrue(raceInfoElements.size() == 1);
+        Matcher distanceMatcher = PATTERN_RACE_INFO.matcher(raceInfoElements.get(0).html());
         Assert.isTrue(distanceMatcher.matches());
         raceInfo.setDistance(Integer.parseInt(distanceMatcher.group(1)));
-        // distanceMatcher.group(2)
+        raceInfo.setSection(Integer.parseInt(distanceMatcher.group(2)));
         raceInfo.setType(distanceMatcher.group(3).replace("-", ""));
+
+        // Rating Range
+        Elements ratingRangeElements = raceInfoElement.select("td[width=80%] span[class=unnamed1] font");
+        Assert.isTrue(ratingRangeElements.size() == 1);
+        raceInfo.setRatingRange(ratingRangeElements.get(0).html());
+
         return raceInfo;
     }
 }

@@ -9,7 +9,7 @@ import org.mongodb.morphia.annotations.Transient;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Result {
+public class ResultRecord {
     private String place;
     private String horseNo;
     private Horse horse;
@@ -25,7 +25,7 @@ public class Result {
     private String finishTime;
     private String winOdds;
 
-    public Result() {
+    public ResultRecord() {
         super();
         place = null;
         horseNo = null;

@@ -13,7 +13,7 @@ public class RaceDay {
     private Date date;
     private String venue;
     private String dayNight;
-    private String course;  //賽道
+    private String track;  //賽道
     private List<RaceInfo> raceInfoList;
 
     @Transient
@@ -24,7 +24,7 @@ public class RaceDay {
         this.date = null;
         this.venue = null;
         this.dayNight = null;
-        this.course = null;
+        this.track = null;
         this.raceInfoList = new ArrayList<>();
         this.raceInfoListWrapper = new Models<>(raceInfoList);
     }
@@ -53,12 +53,12 @@ public class RaceDay {
         this.dayNight = dayNight;
     }
 
-    public String getCourse() {
-        return course;
+    public String getTrack() {
+        return track;
     }
 
-    public void setCourse(String course) {
-        this.course = course;
+    public void setTrack(String track) {
+        this.track = track;
     }
 
     public Models<RaceInfo> getRaceInfoListWrapper() {

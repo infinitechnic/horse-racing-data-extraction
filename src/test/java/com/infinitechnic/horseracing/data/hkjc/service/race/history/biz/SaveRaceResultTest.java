@@ -1,4 +1,4 @@
-package com.infinitechnic.horseracing.data.hkjc.service.race.biz;
+package com.infinitechnic.horseracing.data.hkjc.service.race.history.biz;
 
 import com.infinitechnic.horseracing.data.BaseTest;
 import com.infinitechnic.util.DateUtil;
@@ -8,9 +8,9 @@ import org.testng.annotations.Test;
 
 import java.util.Date;
 
-public class ExtractRaceHistoryTest extends BaseTest {
+public class SaveRaceResultTest extends BaseTest {
     @Autowired
-    private ExtractRaceHistory service;
+    private SaveRaceResult service;
 
     @Test
     public void test() {

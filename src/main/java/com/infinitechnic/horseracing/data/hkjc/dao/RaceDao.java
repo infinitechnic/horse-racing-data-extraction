@@ -1,8 +1,8 @@
 package com.infinitechnic.horseracing.data.hkjc.dao;
 
 
-import com.infinitechnic.horseracing.data.hkjc.entity.race.history.Race;
+import com.infinitechnic.horseracing.data.hkjc.entity.race.history.RaceResult;
 
 public interface RaceDao {
-    Race saveRace(Race race);
+    RaceResult saveRaceResult(RaceResult race);
 }

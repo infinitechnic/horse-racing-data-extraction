@@ -1,6 +1,6 @@
 package com.infinitechnic.horseracing.data.hkjc.exception;
 
-public final class ServiceFailureException extends Exception {
+public final class ServiceFailureException extends RuntimeException {
     public ServiceFailureException(String message) {
         super(message);
     }
