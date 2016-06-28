@@ -1,12 +1,13 @@
-package com.infinitechnic.horseracing.data.hkjc.service.race.fixture.biz;
+package com.infinitechnic.horseracing.data.hkjc.service.race.fixture.calendar.biz;
 
 import com.infinitechnic.horseracing.data.BaseTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.annotations.Test;
 
-public class RetrieveRaceCalendarTest extends BaseTest {
+@Deprecated
+public class ExtractRaceCalendarTest extends BaseTest {
     @Autowired
-    private RetrieveRaceCalendar service;
+    private ExtractRaceCalendar service;
 
     @Test
     public void test() {

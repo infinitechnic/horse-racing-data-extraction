@@ -1,4 +1,4 @@
-package com.infinitechnic.horseracing.data.hkjc.dao;
+package com.infinitechnic.horseracing.data.hkjc.dao.horse;
 
 
 import com.infinitechnic.horseracing.data.hkjc.entity.horse.Horse;

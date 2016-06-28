@@ -1,12 +1,13 @@
-package com.infinitechnic.horseracing.data.hkjc.entity.race.entry;
+package com.infinitechnic.horseracing.data.hkjc.entity.race;
 
+import com.infinitechnic.horseracing.data.hkjc.entity.BaseEntity;
+import com.infinitechnic.horseracing.data.hkjc.entity.Status;
 import com.infinitechnic.horseracing.data.hkjc.entity.horse.Horse;
 import com.infinitechnic.horseracing.data.hkjc.entity.trainer.Trainer;
-import com.infinitechnic.util.StringUtil;
+import org.mongodb.morphia.annotations.Entity;
+import org.mongodb.morphia.annotations.Reference;
 
-@Deprecated
-public class EntryRecord {
-    private Boolean reserved;
+public class RaceEntry {
     private Integer no;
     private Horse horse;
     private Trainer trainer;
@@ -16,10 +17,11 @@ public class EntryRecord {
     private Integer ratingDifference;   // 評分 +/-
     private Integer priority;   // 優
     private String remarks;
+    private Status entryStatus;
+    private Status actualStatus;
 
-    public EntryRecord() {
+    public RaceEntry() {
         super();
-        reserved = null;
         no = null;
         horse = null;
         trainer = null;
@@ -29,14 +31,8 @@ public class EntryRecord {
         ratingDifference = null;
         priority = null;
         remarks = null;
-    }
-
-    public Boolean getReserved() {
-        return reserved;
-    }
-
-    public void setReserved(Boolean reserved) {
-        this.reserved = reserved;
+        entryStatus = null;
+        actualStatus = null;
     }
 
     public Integer getNo() {
@@ -109,5 +105,21 @@ public class EntryRecord {
 
     public void setRemarks(String remarks) {
         this.remarks = remarks;
+    }
+
+    public Status getEntryStatus() {
+        return entryStatus;
+    }
+
+    public void setEntryStatus(Status entryStatus) {
+        this.entryStatus = entryStatus;
+    }
+
+    public Status getActualStatus() {
+        return actualStatus;
+    }
+
+    public void setActualStatus(Status actualStatus) {
+        this.actualStatus = actualStatus;
     }
 }

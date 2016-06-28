@@ -7,6 +7,7 @@ import com.infinitechnic.horseracing.data.hkjc.exception.ServiceRenderException;
 import java.util.Date;
 import java.util.List;
 
-public interface RetrieveRaceEntries {
+@Deprecated
+public interface ExtractRaceEntries {
     List<RaceEntry> render(Date date) throws ServiceRenderException, ServiceFailureException;
 }

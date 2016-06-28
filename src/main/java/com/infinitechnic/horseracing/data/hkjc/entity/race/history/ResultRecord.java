@@ -9,6 +9,7 @@ import org.mongodb.morphia.annotations.Transient;
 import java.util.ArrayList;
 import java.util.List;
 
+@Deprecated
 public class ResultRecord {
     private String place;
     private String horseNo;

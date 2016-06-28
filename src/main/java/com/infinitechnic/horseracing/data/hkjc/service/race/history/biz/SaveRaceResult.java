@@ -6,6 +6,7 @@ import com.infinitechnic.horseracing.data.hkjc.exception.ServiceRenderException;
 
 import java.util.Date;
 
+@Deprecated
 public interface SaveRaceResult {
     RaceResult render(Date raceDate, String venue, Integer raceNumber) throws ServiceRenderException, ServiceFailureException;
 }

@@ -1,7 +1,7 @@
 package com.infinitechnic.horseracing.data.hkjc.entity.race.history;
 
 import com.infinitechnic.horseracing.data.hkjc.entity.Models;
-import com.infinitechnic.horseracing.data.hkjc.entity.race.Race;
+import com.infinitechnic.horseracing.data.hkjc.entity.race.RaceSummary;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Transient;
 
@@ -9,8 +9,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@Deprecated
 @Entity(value = "race_result")
-public class RaceResult extends Race {
+public class RaceResult extends RaceSummary {
     private List<ResultRecord> resultRecords;
 
     @Transient

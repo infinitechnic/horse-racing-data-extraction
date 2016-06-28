@@ -8,6 +8,7 @@ import org.testng.annotations.Test;
 
 import java.util.Date;
 
+@Deprecated
 public class ExtractRaceResultTest extends BaseTest {
     @Autowired
     private ExtractRaceResult service;

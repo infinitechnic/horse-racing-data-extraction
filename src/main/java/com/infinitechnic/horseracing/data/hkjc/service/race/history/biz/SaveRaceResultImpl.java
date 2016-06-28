@@ -1,15 +1,15 @@
 package com.infinitechnic.horseracing.data.hkjc.service.race.history.biz;
 
-import com.infinitechnic.horseracing.data.hkjc.dao.RaceDao;
+import com.infinitechnic.horseracing.data.hkjc.dao.race.RaceDao;
 import com.infinitechnic.horseracing.data.hkjc.entity.race.history.RaceResult;
 import com.infinitechnic.horseracing.data.hkjc.exception.ServiceFailureException;
 import com.infinitechnic.horseracing.data.hkjc.exception.ServiceRenderException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.Date;
 
-@Service
+@Deprecated
+//@Service
 public class SaveRaceResultImpl implements SaveRaceResult {
     @Autowired
     private ExtractRaceResult extractor;

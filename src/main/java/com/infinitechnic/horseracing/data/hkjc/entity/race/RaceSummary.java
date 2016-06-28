@@ -1,25 +1,48 @@
-package com.infinitechnic.horseracing.data.hkjc.entity.race.fixture;
-
-import com.infinitechnic.horseracing.data.hkjc.entity.race.Race;
+package com.infinitechnic.horseracing.data.hkjc.entity.race;
 
 import java.util.Date;
 
-public class RaceInfo extends Race {
-    private String raceClass;   //賽事班次
-    private Integer distance;   //途程
-    private String type;    //C=Cup Race P=Priority to Run R=Restricted S=Special Condition
-    private Integer section; //組別 (eg. 1)
-    private String track;   //賽道 (eg. AWT or TURF)
-    private String ratingRange; //評分幅度 (eg. 100-080)
+@Deprecated
+public abstract class RaceSummary {//extends BaseEntity {
+    protected Date date;
+    protected Integer raceNo;
+    protected String raceClass;   //賽事班次
+    protected Integer distance;   //途程
+    protected String type;    //C=Cup Race P=Priority to Run R=Restricted S=Special Condition
+    protected Integer section; //組別 (eg. 1)
+    protected String track;   //賽道 (eg. AWT or TURF)
+    protected String ratingRange; //評分幅度 (eg. 100-080)
 
-    public RaceInfo(Date date, Integer raceNo) {
-        super(date, raceNo);
+    protected RaceSummary(Date date, Integer raceNo) {
+        super();
+        this.date = date;
+        this.raceNo = raceNo;
         this.raceClass = null;
         this.distance = null;
         this.type = null;
         this.section = null;
         this.track = null;
         this.ratingRange = null;
+    }
+
+    protected RaceSummary(Date date) {
+        this(date, null);
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public Integer getRaceNo() {
+        return raceNo;
+    }
+
+    public void setRaceNo(Integer raceNo) {
+        this.raceNo = raceNo;
     }
 
     public String getRaceClass() {

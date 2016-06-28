@@ -23,7 +23,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-@Service
+@Deprecated
+//@Service
 public class ExtractRaceResultImpl implements ExtractRaceResult {
     @Override
     public RaceResult render(Date raceDate, String venue, Integer raceNumber) throws ServiceRenderException, ServiceFailureException {
