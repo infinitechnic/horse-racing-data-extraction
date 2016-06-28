@@ -4,6 +4,7 @@ import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.internal.scanning.PackageNamesScanner;
 
+//TODO: change the name to JerseyConfig?
 public class AppConfig extends ResourceConfig {
 
     public AppConfig() {
