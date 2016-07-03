@@ -41,4 +41,8 @@ public class Models<E> {
     public List<E> getModels() {
         return Collections.unmodifiableList(new ArrayList<E>(models));
     }
+
+    public int size() {
+        return models == null ? 0 : models.size();
+    }
 }

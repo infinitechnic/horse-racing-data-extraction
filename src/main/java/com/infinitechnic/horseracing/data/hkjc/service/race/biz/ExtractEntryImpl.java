@@ -95,7 +95,7 @@ public class ExtractEntryImpl implements ExtractEntry {
         for (int i=1; i<listSize; i++) {
             System.out.println(i + " - " + entryDetailElements.get(i).text());
             if (i % 2 == 0) {
-                String val = entryDetailElements.get(i).text().trim();
+                String val = entryDetailElements.get(i).text().replace(Character.toString ((char) 160), "").trim();
                 switch (i/2) {
                     case 1:
                         race.setTrack(val);
@@ -106,7 +106,7 @@ public class ExtractEntryImpl implements ExtractEntry {
                     case 4:
                         race.setName(val);
                     case 5:
-                        race.setDistance(NumberUtil.parseInteger(val.substring(0, val.length()-2)));
+                        race.setDistance(NumberUtil.parseInteger(val.substring(0, val.length()-1)));
                     case 6:
                         race.setRaceClass(val);
                     case 7:

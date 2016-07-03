@@ -18,6 +18,7 @@ public class Race {
     private Integer distance;   //途程
     private Integer section; //組別/分組/編組 (eg. 1)
     private String ratingRange; //評分幅度 (eg. 100-080)
+    private Integer prizeMoney; //獎金
 
     @Embedded
     private List<RaceEntry> raceEntries;
@@ -35,6 +36,7 @@ public class Race {
         this.section = null;
         this.track = null;
         this.ratingRange = null;
+        this.prizeMoney = null;
         this.raceEntries = null;
         this.raceEntriesWrapper = null;
     }
@@ -115,6 +117,14 @@ public class Race {
         this.ratingRange = ratingRange;
     }
 
+    public Integer getPrizeMoney() {
+        return prizeMoney;
+    }
+
+    public void setPrizeMoney(Integer prizeMoney) {
+        this.prizeMoney = prizeMoney;
+    }
+
     public Models<RaceEntry> getRaceEntries() {
         if (raceEntriesWrapper == null) {
             if (raceEntries == null) {
@@ -123,5 +133,13 @@ public class Race {
             raceEntriesWrapper = new Models<>(raceEntries);
         }
         return raceEntriesWrapper;
+    }
+
+    public String getBusinessKey() {
+        return getBusinessKey(name, raceClass, distance);
+    }
+
+    public static String getBusinessKey(String name, String raceClass, Integer distance) {
+        return String.format("%s|%s|%d", name, raceClass, distance);
     }
 }
