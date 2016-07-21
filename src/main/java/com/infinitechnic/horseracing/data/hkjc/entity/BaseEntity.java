@@ -33,7 +33,10 @@ public abstract class BaseEntity<T extends BaseEntity<?>> {
     }
 
     public void setId(String id) {
-        //TODO: throw exception if old value is not null and new value is diff from old value
+        //throw exception if old value is not null and new value is diff from old value
+        if (this.id != null && !this.id.equals(id)) {
+            throw new RuntimeException("ID cannot be changed!");
+        }
         this.id = id;
     }
 
