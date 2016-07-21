@@ -9,6 +9,7 @@ import java.util.List;
 
 public class Race {
     private Integer raceNo;
+    private Integer raceIndex;  //TODO: haven't set yet
     private String type;    //C=Cup Race P=Priority to Run R=Restricted S=Special Condition
 
     private String name;    //賽事名稱
@@ -28,6 +29,7 @@ public class Race {
     public Race(Integer raceNo) {
         super();
         this.raceNo = raceNo;
+        this.raceIndex = null;
         this.raceClass = null;
         this.name = null;
         this.course = null;
@@ -51,6 +53,14 @@ public class Race {
 
     public void setRaceNo(Integer raceNo) {
         this.raceNo = raceNo;
+    }
+
+    public Integer getRaceIndex() {
+        return raceIndex;
+    }
+
+    public void setRaceIndex(Integer raceIndex) {
+        this.raceIndex = raceIndex;
     }
 
     public String getRaceClass() {
