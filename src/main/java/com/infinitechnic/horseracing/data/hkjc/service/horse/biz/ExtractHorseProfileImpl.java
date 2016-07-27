@@ -53,39 +53,46 @@ public class ExtractHorseProfileImpl implements ExtractHorseProfile {
             throw new ServiceRenderException(String.format("Horse ID is null!"));
         }
 
+        int retryCount = 0;
+        boolean success = false;
         Horse horse = null;
-        try {
-            Document doc = Jsoup.connect(String.format("http://www.hkjc.com/english/racing/horse.asp?HorseNo=%s&Option=1", id)).get();
+        while (!success && retryCount < 5) {
+            try {
+                Document doc = Jsoup.connect(String.format("http://www.hkjc.com/english/racing/horse.asp?HorseNo=%s&Option=1", id)).get();
 
-            // Horse Detail
-            horse = extractHorseDetail(id, doc);
+                // Horse Detail
+                horse = extractHorseDetail(id, doc);
 
-            // Record
-            Elements recordTables = doc.select("table[class=bigborder]");
-            Assert.isTrue(recordTables.size() > 0);
-            System.out.println(recordTables.size());
-            Elements recordElements = recordTables.get(0).select("tbody tr[bgcolor=#F8F4EF],tr[bgcolor=#E7E4DF]");
-            Iterator<Element> recordElementIt = recordElements.iterator();
-            while(recordElementIt.hasNext()) {
-                Element tr = recordElementIt.next();
-                //race.getRaceEntries().add(parseEntryRow(tr, Status.SELECT));
-                updateRecord(horse, tr);
+                // Record
+                Elements recordTables = doc.select("table[class=bigborder]");
+                if (recordTables.size() > 0) {
+                    Assert.isTrue(recordTables.size() > 0);
+                    //                System.out.println(recordTables.size());
+                    Elements recordElements = recordTables.get(0).select("tbody tr[bgcolor=#F8F4EF],tr[bgcolor=#E7E4DF]");
+                    Iterator<Element> recordElementIt = recordElements.iterator();
+                    while (recordElementIt.hasNext()) {
+                        Element tr = recordElementIt.next();
+                        //race.getRaceEntries().add(parseEntryRow(tr, Status.SELECT));
+                        updateRecord(horse, tr);
+                    }
+                }
+                success = true;
+            } catch (Exception e) {
+                success = false;
+                retryCount++;
             }
-        } catch (Exception e) {
-            throw new ServiceFailureException(e);
         }
-
         return horse;
     }
 
     private Horse extractHorseDetail(String id, Document doc) {
-        String name = doc.select("td[class=subsubheader]").text().replace(id, "").replace("()", "").trim();
+        String name = doc.select("td[class=subsubheader]").text().replace(id, "").replace("()", "").replace(Character.toString ((char) 160), "").trim();
         Horse horse = horseDao.getHorseById(id);
         if (horse == null) {
             horse = new Horse();
             horse.setId(id);
-            horse.setName(name);
         }
+        horse.setName(name);
         return horse;
     }
 
